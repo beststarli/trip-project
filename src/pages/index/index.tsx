@@ -1,6 +1,8 @@
-import { View, Text } from '@tarojs/components'
+import { View } from '@tarojs/components'
 import { useLoad } from '@tarojs/taro'
 import './index.css'
+import User from '../user/user'
+import Admin from '../admin/admin'
 
 export default function Index() {
 	useLoad(() => {
@@ -8,8 +10,11 @@ export default function Index() {
 	})
 
 	return (
-		<View className='index'>
-			<Text className='text-4xl font-bold text-amber-500'>Hello world!</Text>
+		<View className='w-screen h-screen p-0 flex flex-col overflow-y-auto'>
+			{/* <SwiperContainer />
+			<SearchArea /> */}
+			<User />
+			{/* <Admin /> */}
 		</View>
 	)
 }
