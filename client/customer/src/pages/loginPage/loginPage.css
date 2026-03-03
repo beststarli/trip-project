@@ -1,0 +1,9 @@
+.login-input-group .login-input-item + .login-input-item {
+    margin-top: 24rpx;
+}
+
+.login-input-row {
+    border-bottom: 2px solid #d1d5db;
+    margin-top: 4px;
+    width: 80%;
+}
