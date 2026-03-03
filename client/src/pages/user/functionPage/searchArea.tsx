@@ -74,7 +74,7 @@ export default function SearchArea() {
 
     return (
         <View className='w-full box-border px-3 -mt-8 relative z-20'>
-            <View className='w-full box-border bg-white rounded-2xl px-4 pt-4 pb-5 shadow-sm'>
+            <View className='w-full box-border bg-white rounded-2xl px-4 pt-4 pb-5 shadow-md'>
                 <View className='w-full box-border flex flex-row items-center justify-between'>
                     {tabs.map((t, idx) => (
                         <View

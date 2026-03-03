@@ -10,7 +10,7 @@ export default function Index() {
 	})
 
 	return (
-		<View className='w-screen h-screen p-0 flex flex-col overflow-y-auto'>
+		<View className='w-screen h-screen p-0 flex flex-col '>
 			{/* <SwiperContainer />
 			<SearchArea /> */}
 			<User />

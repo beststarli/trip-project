@@ -1,6 +1,7 @@
 import { PropsWithChildren } from 'react'
 import { useLaunch } from '@tarojs/taro'
 
+import 'taro-ui/dist/style/index.scss'
 import './app.css'
 
 function App({ children }: PropsWithChildren<any>) {

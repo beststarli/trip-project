@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { View } from '@tarojs/components'
 import { AtTabBar } from 'taro-ui'
-import FunctionPage from './functionPage'
-import OrderPage from './orderPage'
-import UserPage from './userPage'
+import FunctionPage from './functionPage/functionPage'
+import OrderPage from './orderPage/orderPage'
+import UserPage from './userPage/userPage'
+import CartPage from './cartPage/cartPage'
 
 export default function User() {
     const [current, setCurrent] = useState(0)
@@ -13,8 +14,10 @@ export default function User() {
             case 0:
                 return <FunctionPage />
             case 1:
-                return <OrderPage />
+                return <CartPage />
             case 2:
+                return <OrderPage />
+            case 3:
                 return <UserPage />
             default:
                 return <FunctionPage />
@@ -27,9 +30,10 @@ export default function User() {
             <AtTabBar
                 fixed
                 tabList={[
-                    { title: '推荐', iconType: 'arrow-down',  },
-                    { title: '订单', iconType: 'shopping-bag-2' },
-                    { title: '我', iconType: 'user',}
+                    { title: '推荐', iconType: 'home' },
+                    { title: '购物车', iconType: 'shopping-cart' },
+                    { title: '订单', iconType: 'shopping-bag' },
+                    { title: '我的', iconType: 'user' },
                 ]}
                 onClick={setCurrent}
                 current={current}
