@@ -4,11 +4,36 @@
     box-sizing: border-box;
 }
 
+.login-title-text {
+	display: block;
+	font-size: 1.5rem /* 24px */;
+    line-height: 2rem /* 32px */;
+	font-weight: 700;
+	color: #2285ec;
+}
+
 .login-input-row {
     border-bottom: 2rpx solid #e5e7eb;
     display: flex;
     align-items: center;
     min-height: 74rpx;
+}
+
+.input-row-error {
+    border-bottom-color: #ef4444;
+}
+
+.input-label-row {
+    display: flex;
+    align-items: center;
+    /* justify-content: space-between; */
+}
+
+.input-error-text-inline {
+    margin-left: 16px;
+    color: #ef4444;
+    font-size: 24rpx;
+    line-height: 1;
 }
 
 .field-input {

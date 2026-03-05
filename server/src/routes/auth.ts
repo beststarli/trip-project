@@ -1,118 +1,119 @@
 import { NextFunction, Request, Response, Router } from 'express'
-import bcrypt from 'bcryptjs'
-import jwt, { SignOptions } from 'jsonwebtoken'
-import pool from '../db/pool'
+import { AuthServiceError, loginUser, registerUser, validateCredentials } from '../services/auth.service'
 
 const router = Router()
 
-function validateCredentials(account: unknown, password: unknown) {
-  if (!account || !password) {
-    return '账号和密码不能为空'
-  }
-
-  if (String(account).trim().length < 4) {
-    return '账号长度至少 4 位'
-  }
-
-  if (String(password).length < 6) {
-    return '密码长度至少 6 位'
-  }
-
-  return null
-}
+/**
+ * @openapi
+ * /auth/register:
+ *   post:
+ *     summary: 用户注册
+ *     tags:
+ *       - Auth
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/AuthRequest'
+ *     responses:
+ *       201:
+ *         description: 注册成功
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: 注册成功
+ *                 user:
+ *                   $ref: '#/components/schemas/User'
+ *       400:
+ *         description: 参数错误
+ *       409:
+ *         description: 账号已存在
+ */
 
 router.post('/register', async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const { account, password } = req.body || {}
-    const validationError = validateCredentials(account, password)
+    try {
+        const { account, password, confirmPassword } = req.body || {}
+        const validationError = validateCredentials(account, password, confirmPassword)
 
-    if (validationError) {
-      return res.status(400).json({ message: validationError })
+        if (validationError) {
+            return res.status(400).json({ message: validationError })
+        }
+        const user = await registerUser(String(account), String(password))
+
+        return res.status(201).json({
+            success: true,
+            message: '注册成功',
+            user,
+        })
+    } catch (error) {
+        if (error instanceof AuthServiceError) {
+            return res.status(error.statusCode).json({ message: error.message })
+        }
+        return next(error)
     }
-
-    const normalizedAccount = String(account).trim()
-
-    const existingUserResult = await pool.query('SELECT id FROM users WHERE account = $1', [normalizedAccount])
-    if ((existingUserResult.rowCount ?? 0) > 0) {
-      return res.status(409).json({ message: '账号已存在' })
-    }
-
-    const passwordHash = await bcrypt.hash(String(password), 10)
-
-    const insertResult = await pool.query(
-      'INSERT INTO users (account, password_hash) VALUES ($1, $2) RETURNING id, account, created_at',
-      [normalizedAccount, passwordHash],
-    )
-
-    return res.status(201).json({
-      message: '注册成功',
-      user: insertResult.rows[0],
-    })
-  } catch (error) {
-    return next(error)
-  }
 })
 
+/**
+ * @openapi
+ * /auth/login:
+ *   post:
+ *     summary: 用户登录
+ *     tags:
+ *       - Auth
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/AuthRequest'
+ *     responses:
+ *       200:
+ *         description: 登录成功
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: 登录成功
+ *                 token:
+ *                   type: string
+ *                   example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.xxx
+ *                 user:
+ *                   $ref: '#/components/schemas/User'
+ *       400:
+ *         description: 参数错误
+ *       401:
+ *         description: 账号或密码错误
+ */
+
 router.post('/login', async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const { account, password } = req.body || {}
+    try {
+        const { account, password } = req.body || {}
 
-    if (!account || !password) {
-      return res.status(400).json({ message: '账号和密码不能为空' })
+        if (!account || !password) {
+            return res.status(400).json({ message: '账号和密码不能为空' })
+        }
+        const { token, user } = await loginUser(String(account), String(password))
+
+        return res.json({
+            success: true,
+            message: '登录成功',
+            token,
+            user,
+        })
+    } catch (error) {
+        if (error instanceof AuthServiceError) {
+            return res.status(error.statusCode).json({ message: error.message })
+        }
+        return next(error)
     }
-
-    const normalizedAccount = String(account).trim()
-
-    const userResult = await pool.query('SELECT id, account, password_hash, created_at FROM users WHERE account = $1', [
-      normalizedAccount,
-    ])
-
-    if ((userResult.rowCount ?? 0) === 0) {
-      return res.status(401).json({ message: '账号或密码错误' })
-    }
-
-    const user = userResult.rows[0] as {
-      id: number
-      account: string
-      password_hash: string
-      created_at: string
-    }
-    const isPasswordValid = await bcrypt.compare(String(password), user.password_hash)
-
-    if (!isPasswordValid) {
-      return res.status(401).json({ message: '账号或密码错误' })
-    }
-
-    const jwtSecret = process.env.JWT_SECRET
-    if (!jwtSecret) {
-      return res.status(500).json({ message: '服务端 JWT 配置缺失' })
-    }
-
-    const signOptions: SignOptions = {
-      expiresIn: (process.env.JWT_EXPIRES_IN || '7d') as SignOptions['expiresIn'],
-    }
-
-    const token = jwt.sign(
-      {
-        sub: user.id,
-        account: user.account,
-      },
-      jwtSecret,
-      signOptions,
-    )
-
-    return res.json({
-      message: '登录成功',
-      token,
-      user: {
-        id: user.id,
-        account: user.account,
-        created_at: user.created_at,
-      },
-    })
-  } catch (error) {
-    return next(error)
-  }
 })
 
 export default router

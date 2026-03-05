@@ -8,12 +8,22 @@
     justify-content: flex-end;
 }
 
-.welcome-title {
+.welcome-title-1 {
+    display: block;
+    color: #fff;
+    font-size: 75rpx;
+    font-weight: 500;
+    line-height: 1.2;
+    text-shadow: black 2px 2rpx 4rpx;
+}
+
+.welcome-title-2 {
     display: block;
     color: #fff;
     font-size: 50rpx;
     font-weight: 500;
     line-height: 1.2;
+    text-shadow: black 2px 2rpx 4rpx;
 }
 
 .title-card {
@@ -22,8 +32,8 @@
     box-sizing: border-box;
     display: flex;
     align-items: center;
-    padding-top: 2rem;
-    padding-left: 1.5rem;
+    padding-top: 1rem;
+    padding-right: 0.5rem;
 }
 
 .login-card {
@@ -33,5 +43,26 @@
     background: #fff;
     border-radius: 56rpx 56rpx 0 0;
     padding: 22rpx 48rpx 48rpx;
+}
+
+.login-back-btn {
+    position: absolute;
+    top: 24rpx;
+    left: 24rpx;
+    width: 64rpx;
+    height: 64rpx;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(164, 164, 164, 0.3);
+    box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.12);
+}
+
+.login-back-icon {
+    color: #ffffff;
+    font-size: 36rpx;
+    font-weight: 700;
+    line-height: 1;
 }
 

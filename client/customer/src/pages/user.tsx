@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { View } from '@tarojs/components'
 import { AtTabBar } from 'taro-ui'
 import FunctionPage from './functionPage/functionPage'
@@ -6,21 +5,31 @@ import OrderPage from './orderPage/orderPage'
 import UserPage from './userPage/userPage'
 import CartPage from './cartPage/cartPage'
 
-export default function User() {
-    const [current, setCurrent] = useState(0)
+interface UserProps {
+    isLoggedIn: boolean
+    currentTab: number
+    onTabChange: (value: number) => void
+    onRequireLogin: () => void
+}
 
+export default function User({
+    isLoggedIn,
+    currentTab,
+    onTabChange,
+    onRequireLogin
+}: UserProps) {
     const renderPage = () => {
-        switch (current) {
+        switch (currentTab) {
             case 0:
-                return <FunctionPage />
+                return <FunctionPage isLoggedIn={isLoggedIn} />
             case 1:
-                return <CartPage />
+                return <CartPage isLoggedIn={isLoggedIn} />
             case 2:
-                return <OrderPage />
+                return <OrderPage isLoggedIn={isLoggedIn} />
             case 3:
-                return <UserPage />
+                return <UserPage isLoggedIn={isLoggedIn} onRequireLogin={onRequireLogin} />
             default:
-                return <FunctionPage />
+                return <FunctionPage isLoggedIn={isLoggedIn} />
         }
     }
 
@@ -35,8 +44,8 @@ export default function User() {
                     { title: '订单', iconType: 'shopping-bag' },
                     { title: '我的', iconType: 'user' },
                 ]}
-                onClick={setCurrent}
-                current={current}
+                onClick={onTabChange}
+                current={currentTab}
             />
         </View>
     )

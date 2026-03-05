@@ -1,6 +1,5 @@
 import { Text, View } from '@tarojs/components'
-import React from 'react'
-import { AtAvatar, AtIcon } from 'taro-ui'
+import { AtIcon } from 'taro-ui'
 
 const headerButtonsList = [
     {
@@ -20,8 +19,15 @@ const headerButtonsList = [
     },
 ]
 
+interface UserCardProps {
+    isLoggedIn: boolean
+    onRequireLogin: () => void
+}
 
-export default function UserCard() {
+export default function UserCard({ 
+    isLoggedIn, 
+    onRequireLogin 
+}: UserCardProps) {
     return (
         <View className='w-full h-44 box-border bg-amber-100 items-center z-10 p-2'>
             <View className='w-full box-border'>
@@ -39,17 +45,31 @@ export default function UserCard() {
 
                 {/* 头像信息 */}
                 {/* TODO：从数据库获取用户信息 */}
-                <View className='flex p-2 gap-4 items-center bg-lime-300'>
-                    <View >
-                    <AtAvatar circle size='large' text='测试'></AtAvatar>
-
+                <View
+                    className='flex p-2 gap-4 items-center bg-lime-300'
+                    onClick={() => {
+                        if (!isLoggedIn) {
+                            onRequireLogin()
+                        }
+                    }}
+                >
+                    <View>
+                        {isLoggedIn ? (
+                            <View className='w-16 h-16 rounded-full bg-blue-400 flex items-center justify-center'>
+                                <Text className='text-white text-lg'>测</Text>
+                            </View>
+                        ) : (
+                            <View className='w-16 h-16 rounded-full bg-gray-400 flex items-center justify-center'>
+                                <Text className='text-white text-lg'>未</Text>
+                            </View>
+                        )}
                     </View>
                     <View>
                         <View>
-                            <Text className='text-lg font-bold'>测试用户</Text>
+                            <Text className='text-lg font-bold'>{isLoggedIn ? '测试用户' : '当前未登录'}</Text>
                         </View>
                         <View>
-                            <Text className='text-xs text-gray-600'>测试用户的简介信息</Text>
+                            <Text className='text-xs text-gray-600'>{isLoggedIn ? '测试用户的简介信息' : '请先登录以使用全部功能'}</Text>
                         </View>
                     </View>
                 </View>

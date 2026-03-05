@@ -2,8 +2,11 @@ import Taro from '@tarojs/taro'
 import { Input, Picker, ScrollView, Text, View } from '@tarojs/components'
 import { useMemo, useState } from 'react'
 
+interface SearchAreaProps {
+    isLoggedIn: boolean
+}
 
-export default function SearchArea() {
+export default function SearchArea({ isLoggedIn }: SearchAreaProps) {
     const tabs = useMemo(() => ['国内', '海外', '民宿·短租', '钟点房'], [])
     const quickTags = useMemo(() => ['浴缸', '免费停车场', '温泉', '双床房', '亚朵'], [])
 
@@ -58,6 +61,11 @@ export default function SearchArea() {
     }
 
     const handleQuery = () => {
+        if (!isLoggedIn) {
+            Taro.showToast({ title: '当前未登录，请先登录', icon: 'none' })
+            return
+        }
+
         console.log('query', {
             tab: tabs[activeTab],
             locatedText,
