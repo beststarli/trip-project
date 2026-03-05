@@ -12,8 +12,8 @@ export default function SearchArea() {
     const [locationLabel, setLocationLabel] = useState('我的位置')
     const [keyword, setKeyword] = useState('')
 
-    const [startDate, setStartDate] = useState('2026-03-02')
-    const [endDate, setEndDate] = useState('2026-03-03')
+    const [startDate, setStartDate] = useState('2026-03-04')
+    const [endDate, setEndDate] = useState('2026-03-05')
 
     const guestRoomPresets = useMemo(
         () => ['1间房 1成人 0儿童', '1间房 2成人 0儿童', '2间房 2成人 0儿童', '1间房 2成人 1儿童'],

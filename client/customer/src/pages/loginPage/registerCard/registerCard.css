@@ -1,0 +1,92 @@
+.notice-bar {
+	border-radius: 0.8rem;
+	margin: 8px 0 12px 0;
+}
+
+.login-input-row {
+	border-bottom: 2rpx solid #e5e7eb;
+	display: flex;
+	align-items: center;
+	min-height: 74rpx;
+}
+
+.field-input {
+	flex: 1;
+	font-size: 36rpx;
+	color: #1f2937;
+	padding: 8rpx 0;
+}
+
+.input-placeholder {
+	color: #d1d5db;
+	font-size: 30rpx;
+}
+
+.password-row {
+	justify-content: space-between;
+}
+
+.password-icon {
+	color: #d1d5db;
+	font-size: 42rpx;
+	padding-left: 16rpx;
+}
+
+.login-already-text {
+  color: #d1d5db;
+  font-size: 30rpx;
+}
+
+.login-link {
+  color: #2285ec;
+  margin-left: 2rpx;
+}
+
+.register-btn {
+	width: 100%;
+	border-radius: 9999rpx;
+	overflow: hidden;
+	margin-top: 54rpx;
+}
+
+.register-btn.at-button {
+	background: #2285ec;
+	border-color: #2285ec;
+	color: #fff;
+}
+
+.register-btn .at-button__text {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 36rpx;
+	font-weight: 600;
+	line-height: 1;
+	padding: 20rpx 0;
+}
+
+.policy-title {
+	margin-top: 36rpx;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 20rpx;
+}
+
+.line {
+	flex: 1;
+	max-width: 180rpx;
+	height: 2rpx;
+	background: #f3f4f6;
+}
+
+.line-text {
+	color: #d1d5db;
+	font-size: 30rpx;
+}
+
+.line-text-policy {
+    color: #2285ec;
+    font-size: 30rpx;
+    margin: 0 5 0 5;
+}

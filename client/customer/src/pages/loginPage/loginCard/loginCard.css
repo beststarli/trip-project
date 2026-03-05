@@ -1,0 +1,128 @@
+.notice-bar {
+    /* border-radius: 0.1rem; */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.login-input-row {
+    border-bottom: 2rpx solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    min-height: 74rpx;
+}
+
+.field-input {
+    flex: 1;
+    font-size: 36rpx;
+    color: #1f2937;
+    padding: 8rpx 0;
+}
+
+.input-placeholder {
+    color: #d1d5db;
+    font-size: 30rpx;
+}
+
+.password-row {
+    justify-content: space-between;
+}
+
+.password-icon {
+    color: #d1d5db;
+    font-size: 42rpx;
+    padding-left: 16rpx;
+}
+
+.forget-text {
+    display: block;
+    margin-top: 30rpx;
+    color: #d1d5db;
+    font-size: 30rpx;
+}
+
+.primary-btn {
+    width: 100%;
+    border-radius: 9999rpx;
+    overflow: hidden;
+}
+
+.secondary-btn {
+    width: 100%;
+    border-radius: 9999rpx;
+    overflow: hidden;
+}
+
+.primary-btn.at-button {
+    background: #2285ec;
+    border-color: #2285ec;
+    color: #fff;
+}
+
+.secondary-btn.at-button {
+    background: #f3f4f6;
+    border-color: #f3f4f6;
+    color: #111827;
+}
+
+.primary-btn .at-button__text,
+.secondary-btn .at-button__text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 36rpx;
+    font-weight: 600;
+    line-height: 1;
+    padding: 20rpx 0;
+}
+
+.third-login-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20rpx;
+}
+
+.line {
+    flex: 1;
+    max-width: 180rpx;
+    height: 2rpx;
+    background: #f3f4f6;
+}
+
+.line-text {
+    color: #d1d5db;
+    font-size: 24rpx;
+}
+
+.third-login-icons {
+    display: flex;
+    justify-content: center;
+    gap: 80rpx;
+}
+
+.icon-item {
+    width: 88rpx;
+    height: 88rpx;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 42rpx;
+}
+
+.wechat {
+    background: #22c55e;
+}
+
+.apple {
+    background: #374151;
+}
+
+.alipay {
+    background: #0ea5e9;
+}
+
+.pc-login-wrap {
+    padding-top: 24rpx;
+}

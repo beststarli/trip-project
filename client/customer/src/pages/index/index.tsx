@@ -11,8 +11,8 @@ export default function Index() {
 
 	return (
 		<View className='w-screen h-screen p-0 flex flex-col '>
-			{/* <LoginPage /> */}
-			<User />
+			<LoginPage />
+			{/* <User /> */}
 		</View>
 	)
 }
